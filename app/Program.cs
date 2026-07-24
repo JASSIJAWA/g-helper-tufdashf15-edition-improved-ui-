@@ -18,7 +18,7 @@ using static NativeMethods;
 namespace GHelper
 {
 
-    static class Program
+    public static class Program
     {
         public static NotifyIcon trayIcon;
         public static AsusACPI acpi;
@@ -28,7 +28,7 @@ namespace GHelper
         public static ModeControl modeControl;
         public static GPUModeControl gpuControl;
         public static AllyControl allyControl;
-        public static ClamshellModeControl clamshellControl;
+        internal static ClamshellModeControl clamshellControl;
 
         public static ToastForm toast;
 

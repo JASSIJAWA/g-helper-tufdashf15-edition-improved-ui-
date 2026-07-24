@@ -1,4 +1,4 @@
-﻿using GHelper;
+using GHelper;
 using GHelper.USB;
 using System.Management;
 using System.Runtime.InteropServices;
