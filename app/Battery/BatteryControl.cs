@@ -1,4 +1,4 @@
-﻿using GHelper.Helpers;
+using GHelper.Helpers;
 using Microsoft.Win32;
 using System.Diagnostics;
 
@@ -82,7 +82,7 @@ namespace GHelper.Battery
             AppConfig.Set("charge_limit", limit);
             chargeFull = false;
 
-            Program.settingsForm.VisualiseBattery(limit);
+            Program.settingsForm?.VisualiseBattery(limit);
         }
 
         public static void BatteryReport()

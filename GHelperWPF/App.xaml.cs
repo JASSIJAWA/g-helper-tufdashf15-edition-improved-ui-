@@ -16,11 +16,29 @@ public partial class App : System.Windows.Application
     {
         base.OnStartup(e);
 
-        // 1. Initialize ACPI
-        GHelper.Program.acpi = new AsusACPI();
-        
-        // 2. Initialize Hardware Control
-        HardwareControl.RecreateGpuControl();
+        // Setup global exception handling to find out why it crashes
+        AppDomain.CurrentDomain.UnhandledException += (s, ev) => 
+        {
+            System.IO.File.WriteAllText("crash_log.txt", $"UnhandledException: {ev.ExceptionObject}");
+        };
+        this.DispatcherUnhandledException += (s, ev) =>
+        {
+            System.IO.File.WriteAllText("crash_log.txt", $"DispatcherUnhandledException: {ev.Exception}");
+            ev.Handled = true; // Try to keep it running
+        };
+
+        try
+        {
+            // 1. Initialize ACPI
+            GHelper.Program.acpi = new AsusACPI();
+            
+            // 2. Initialize Hardware Control
+            HardwareControl.RecreateGpuControl();
+        }
+        catch (Exception ex)
+        {
+            System.IO.File.WriteAllText("crash_log.txt", $"Startup Crash: {ex}");
+        }
 
         // 3. Create System Tray Icon
         _notifyIcon = new System.Windows.Forms.NotifyIcon

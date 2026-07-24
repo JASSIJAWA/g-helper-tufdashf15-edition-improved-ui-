@@ -1,4 +1,4 @@
-﻿using GHelper.Peripherals.Mouse;
+using GHelper.Peripherals.Mouse;
 using GHelper.Peripherals.Mouse.Models;
 using HidSharp;
 using System.Runtime.CompilerServices;
@@ -243,6 +243,7 @@ namespace GHelper.Peripherals
         private static void RefreshHotkeys()
         {
             if (Program.inputDispatcher is null || Program.settingsForm is null) return;
+            
             if (Program.settingsForm.InvokeRequired)
                 Program.settingsForm.BeginInvoke((Action)Program.inputDispatcher.RegisterKeys);
             else
@@ -251,10 +252,13 @@ namespace GHelper.Peripherals
 
         private static void UpdateSettingsView()
         {
-            Program.settingsForm.Invoke(delegate
+            if (Program.settingsForm != null)
             {
-                Program.settingsForm.VisualizePeripherals();
-            });
+                Program.settingsForm.Invoke(delegate
+                {
+                    Program.settingsForm.VisualizePeripherals();
+                });
+            }
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
